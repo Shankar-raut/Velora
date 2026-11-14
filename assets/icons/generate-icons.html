@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Generate Velora Icons</title>
+    <style>
+        body { font-family: system-ui; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .icon-preview { display: inline-block; margin: 10px; text-align: center; }
+        .icon-preview canvas { border: 1px solid #ddd; border-radius: 8px; background: #fafafa; }
+        button { padding: 12px 24px; font-size: 16px; background: #6366f1; color: white; border: none; border-radius: 8px; cursor: pointer; margin: 5px; }
+        button:hover { background: #4f46e5; }
+        h1 { text-align: center; }
+        .sizes { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Velora Extension Icons</h1>
+    <p style="text-align: center; color: #666;">Click "Generate PNGs" to create the required icon sizes, then right-click each canvas to save as PNG.</p>
+
+    <div style="text-align: center;">
+        <button onclick="generateIcons()">Generate PNGs</button>
+        <button onclick="downloadAll()">Download All as ZIP</button>
+    </div>
+
+    <div class="sizes" id="iconContainer"></div>
+
+    <script>
+        const sizes = [16, 48, 128];
+
+        function drawIcon(ctx, size) {
+            const center = size / 2;
+            const radius = size * 0.47;
+
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#6366f1');
+            gradient.addColorStop(1, '#a855f7');
+
+            // Glow effect
+            ctx.shadowColor = '#6366f1';
+            ctx.shadowBlur = size * 0.15;
+
+            // Background circle
+            ctx.beginPath();
+            ctx.arc(center, center, radius, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Inner circle for glass effect
+            ctx.beginPath();
+            ctx.arc(center, center, radius * 0.83, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = Math.max(1, size * 0.012);
+            ctx.stroke();
+
+            // V letter
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+
+            const vSize = radius * 0.65;
+            const vTop = center - vSize * 0.7;
+            const vBottom = center + vSize * 0.55;
+            const vLeft = center - vSize * 0.5;
+            const vRight = center + vSize * 0.5;
+            const vMiddle = center - vSize * 0.1;
+
+            ctx.beginPath();
+            ctx.moveTo(vLeft, vTop);
+            ctx.lineTo(center, vBottom);
+            ctx.lineTo(vRight, vTop);
+            ctx.lineTo(vRight - vSize * 0.12, vTop);
+            ctx.lineTo(center + vSize * 0.08, vBottom - vSize * 0.25);
+            ctx.lineTo(center - vSize * 0.08, vBottom - vSize * 0.25);
+            ctx.lineTo(vLeft + vSize * 0.12, vTop);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.fill();
+
+            // Highlight
+            ctx.beginPath();
+            ctx.moveTo(vLeft + vSize * 0.05, vTop + vSize * 0.08);
+            ctx.lineTo(center - vSize * 0.05, vBottom - vSize * 0.2);
+            ctx.lineTo(center + vSize * 0.12, vBottom - vSize * 0.2);
+            ctx.lineTo(vRight - vSize * 0.05, vTop + vSize * 0.08);
+            ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx.lineWidth = Math.max(1, size * 0.01);
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+        }
+
+        function generateIcons() {
+            const container = document.getElementById('iconContainer');
+            container.innerHTML = '';
+
+            sizes.forEach(size => {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                drawIcon(ctx, size);
+
+                const div = document.createElement('div');
+                div.className = 'icon-preview';
+                div.innerHTML = `<strong>${size}x${size}</strong><br>`;
+                div.appendChild(canvas);
+                div.innerHTML += `<br><button onclick="downloadCanvas(this, ${size})">Save as icon${size}.png</button>`;
+                container.appendChild(div);
+
+                // Store canvas for download
+                canvas.dataset.size = size;
+            });
+        }
+
+        function downloadCanvas(btn, size) {
+            const canvas = btn.parentElement.querySelector('canvas');
+            const link = document.createElement('a');
+            link.download = `icon${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function downloadAll() {
+            const canvases = document.querySelectorAll('#iconContainer canvas');
+            canvases.forEach(canvas => {
+                const size = canvas.dataset.size;
+                const link = document.createElement('a');
+                link.download = `icon${size}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>

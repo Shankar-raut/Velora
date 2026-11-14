@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Velora",
+  "version": "1.0.0",
+  "description": "A new tab with glass search, themes & quick access",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  }
+}

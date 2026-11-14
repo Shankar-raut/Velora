@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Velora</title>
+    <link rel="icon" href="assets/icons/icon16.png" type="image/png">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/glass.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@600;700;800&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Full-screen wallpaper background -->
+    <div class="wallpaper-layer" id="wallpaperLayer">
+        <img class="wallpaper-img" id="wallpaperImg" src="" alt="Wallpaper">
+        <div class="wallpaper-overlay" id="wallpaperOverlay"></div>
+    </div>
+
+    <main class="app" id="app">
+        <!-- Top bar with theme selector -->
+        <header class="top-bar" role="banner">
+            <div class="brand" id="brand">velora<span class="brand-dot">.</span></div>
+            <div class="top-controls">
+                <button class="icon-btn theme-toggle" id="themeSelectorBtn" aria-label="Select theme" aria-expanded="false" aria-haspopup="listbox" title="Theme selector">
+                    <svg class="icon-theme" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                    </svg>
+                    <span class="theme-label" id="themeLabel">Dark</span>
+                    <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="nextWallpaperBtn" title="Next wallpaper" aria-label="Next wallpaper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        <line x1="19" y1="3" x2="19" y2="21"></line>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="settingsBtn" title="Settings" aria-label="Settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn workspace-toggle" id="workspaceBtn" title="Google Workspace" aria-label="Google Workspace" aria-expanded="false" aria-haspopup="menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                        <rect x="4" y="4" width="6" height="6" rx="1"></rect>
+                        <rect x="14" y="4" width="6" height="6" rx="1"></rect>
+                        <rect x="4" y="14" width="6" height="6" rx="1"></rect>
+                        <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+                    </svg>
+                </button>
+                <div class="workspace-dropdown" id="workspaceDropdown" role="menu" aria-label="Google Workspace sites">
+                    <div class="workspace-heading">Workspace</div>
+                    <a href="https://mail.google.com" target="_blank" rel="noopener" role="menuitem"><span class="workspace-mark gmail">M</span><span>Gmail</span></a>
+                    <a href="https://drive.google.com" target="_blank" rel="noopener" role="menuitem"><span class="workspace-mark drive">D</span><span>Drive</span></a>
+                    <a href="https://docs.google.com" target="_blank" rel="noopener" role="menuitem"><span class="workspace-mark docs">D</span><span>Docs</span></a>
+                    <a href="https://sheets.google.com" target="_blank" rel="noopener" role="menuitem"><span class="workspace-mark sheets">S</span><span>Sheets</span></a>
+                    <a href="https://calendar.google.com" target="_blank" rel="noopener" role="menuitem"><span class="workspace-mark calendar">31</span><span>Calendar</span></a>
+                    <a href="https://meet.google.com" target="_blank" rel="noopener" role="menuitem"><span class="workspace-mark meet">M</span><span>Meet</span></a>
+                </div>
+                <div class="theme-dropdown" id="themeDropdown" role="listbox" aria-label="Themes">
+                    <button type="button" class="theme-option active" data-theme="dark" role="option" aria-selected="true">
+                        <span class="theme-preview dark"></span>
+                        <span class="theme-name">Dark</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="light" role="option" aria-selected="false">
+                        <span class="theme-preview light"></span>
+                        <span class="theme-name">Light</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="auto" role="option" aria-selected="false">
+                        <span class="theme-preview auto"></span>
+                        <span class="theme-name">Auto</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="rose" role="option" aria-selected="false">
+                        <span class="theme-preview rose"></span>
+                        <span class="theme-name">Rose</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="ocean" role="option" aria-selected="false">
+                        <span class="theme-preview ocean"></span>
+                        <span class="theme-name">Ocean</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="forest" role="option" aria-selected="false">
+                        <span class="theme-preview forest"></span>
+                        <span class="theme-name">Forest</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="violet" role="option" aria-selected="false">
+                        <span class="theme-preview violet"></span>
+                        <span class="theme-name">Violet</span>
+                    </button>
+                    <button type="button" class="theme-option" data-theme="amber" role="option" aria-selected="false">
+                        <span class="theme-preview amber"></span>
+                        <span class="theme-name">Amber</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Center content -->
+        <section class="center-content" id="centerContent">
+            <!-- Clock & Greeting -->
+            <div class="greeting-section" id="greetingSection">
+                <p class="greeting-text" id="greetingText">Good evening</p>
+                <div class="clock-container" id="clockContainer">
+                    <time class="clock" id="clock" datetime="" aria-label="Current time">
+                        <span class="clock-digit" id="clockHourTens" data-digit="0" aria-hidden="true">0</span>
+                        <span class="clock-digit" id="clockHourOnes" data-digit="0" aria-hidden="true">0</span>
+                        <span class="clock-separator" aria-hidden="true">:</span>
+                        <span class="clock-digit" id="clockMinuteTens" data-digit="0" aria-hidden="true">0</span>
+                        <span class="clock-digit" id="clockMinuteOnes" data-digit="0" aria-hidden="true">0</span>
+                    </time>
+                    <time class="clock-seconds" id="clockSeconds" datetime="" aria-hidden="true">00</time>
+                </div>
+                <div class="clock-meta" aria-label="Date">
+                    <p class="date" id="date">Loading date...</p>
+                </div>
+            </div>
+
+            <!-- Search section -->
+            <section class="search-section" id="searchSection">
+                <form class="search-form" id="searchForm" role="search">
+                    <div class="search-engine-selector" id="searchEngineSelector">
+                        <button type="button" class="search-engine-btn" id="searchEngineBtn" aria-label="Select search engine" aria-expanded="false" aria-haspopup="listbox">
+                            <img class="engine-icon" id="engineIcon" src="" alt="">
+                            <span class="engine-name" id="engineName">Google</span>
+                            <svg class="engine-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="search-engine-dropdown" id="searchEngineDropdown" role="listbox" aria-label="Search engines"></div>
+                    </div>
+                    <div class="search-glass-wrapper" id="searchGlassWrapper">
+                        <div class="search-glass" id="searchGlass">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7"></circle>
+                                <line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+                            </svg>
+                            <input type="search" class="search-input" id="searchInput" placeholder="Search the web..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Search the web" aria-autocomplete="list" aria-controls="searchSuggestions">
+                            <button type="submit" class="search-submit" id="searchSubmit" aria-label="Search">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                                    <polyline points="14 6 20 12 14 18"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="search-suggestions" id="searchSuggestions" role="listbox" aria-label="Search suggestions" hidden></div>
+                    </div>
+                </form>
+                <p class="search-hint" id="searchHint">Press <kbd>/</kbd> to focus search</p>
+            </section>
+
+            <!-- Quick Access Buttons -->
+            <section class="quick-access-section" id="quickAccessSection">
+                <div class="quick-access-grid" id="quickAccessGrid" role="list"></div>
+            </section>
+
+            <!-- Custom Shortcuts -->
+            <section class="shortcuts-section" id="shortcutsSection">
+                <div class="section-header">
+                    <h2 class="section-title">Your shortcuts</h2>
+                    <button class="icon-btn add-shortcut-btn" id="addShortcutBtn" title="Add shortcut" aria-label="Add shortcut">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="shortcut-grid" id="shortcutGrid" role="list"></div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Add/Edit Shortcut Dialog -->
+    <dialog class="dialog" id="shortcutDialog">
+        <form class="dialog-content" id="shortcutForm">
+            <h2 class="dialog-title" id="dialogTitle">Add a website</h2>
+            <p class="dialog-description">Create your own quick access shortcut.</p>
+            <input type="hidden" id="shortcutEditIndex">
+            <div class="form-group">
+                <label for="siteName" class="form-label">Name</label>
+                <input type="text" id="siteName" class="form-input" placeholder="Website name" maxlength="30" required aria-required="true">
+            </div>
+            <div class="form-group">
+                <label for="siteUrl" class="form-label">URL</label>
+                <input type="text" id="siteUrl" class="form-input" placeholder="example.com" required aria-required="true">
+            </div>
+            <div class="dialog-actions">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save shortcut</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- Settings Panel -->
+    <dialog class="dialog settings-dialog" id="settingsDialog">
+        <div class="settings-content">
+            <header class="settings-header">
+                <h2 class="settings-title">Settings</h2>
+                <button class="icon-btn settings-close" id="settingsCloseBtn" aria-label="Close settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </header>
+            <nav class="settings-nav" id="settingsNav" role="tablist" aria-label="Settings categories">
+                <button class="settings-tab active" data-tab="appearance" role="tab" aria-selected="true" aria-controls="panel-appearance">Appearance</button>
+                <button class="settings-tab" data-tab="search" role="tab" aria-selected="false" aria-controls="panel-search">Search</button>
+                <button class="settings-tab" data-tab="shortcuts" role="tab" aria-selected="false" aria-controls="panel-shortcuts">Shortcuts</button>
+                <button class="settings-tab" data-tab="general" role="tab" aria-selected="false" aria-controls="panel-general">General</button>
+            </nav>
+            <div class="settings-panels">
+                <!-- Appearance Panel -->
+                <div class="settings-panel active" id="panel-appearance" role="tabpanel" aria-labelledby="tab-appearance">
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Theme</h3>
+                        <div class="setting-row">
+                            <label class="setting-label" for="themeMode">Theme mode</label>
+                            <select class="form-select" id="themeMode">
+                                <option value="auto">Automatic</option>
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                                <option value="system">System</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Wallpaper</h3>
+                        <div class="setting-row">
+                            <label class="setting-label">Categories</label>
+                            <div class="category-toggles" id="categoryToggles"></div>
+                        </div>
+                        <div class="setting-row">
+                            <label class="setting-label" for="rotationInterval">Rotation interval</label>
+                            <select class="form-select" id="rotationInterval">
+                                <option value="newtab">Every new tab</option>
+                                <option value="30min">30 minutes</option>
+                                <option value="1hour">1 hour</option>
+                                <option value="daily">Daily</option>
+                                <option value="manual">Manual only</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Display</h3>
+                        <div class="setting-row toggle-row">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Show clock</span>
+                                <span class="toggle-desc">Display time and date</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="showClock" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Panel -->
+                <div class="settings-panel" id="panel-search" role="tabpanel" aria-labelledby="tab-search" hidden>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Search Engine</h3>
+                        <div class="setting-row">
+                            <label class="setting-label" for="defaultEngine">Default search engine</label>
+                            <select class="form-select" id="defaultEngine">
+                                <option value="google">Google</option>
+                                <option value="bing">Bing</option>
+                                <option value="duckduckgo">DuckDuckGo</option>
+                                <option value="brave">Brave Search</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shortcuts Panel -->
+                <div class="settings-panel" id="panel-shortcuts" role="tabpanel" aria-labelledby="tab-shortcuts" hidden>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Manage Shortcuts</h3>
+                        <div class="shortcuts-manager" id="shortcutsManager"></div>
+                        <button class="btn btn-secondary" id="restoreDefaultsBtn">Restore defaults</button>
+                    </div>
+                </div>
+
+                <!-- General Panel -->
+                <div class="settings-panel" id="panel-general" role="tabpanel" aria-labelledby="tab-general" hidden>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Time Format</h3>
+                        <div class="setting-row toggle-row">
+                            <div class="toggle-label">
+                                <span class="toggle-title">24-hour clock</span>
+                                <span class="toggle-desc">Use 24-hour time format</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="use24Hour">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Accessibility</h3>
+                        <div class="setting-row toggle-row">
+                            <div class="toggle-label">
+                                <span class="toggle-title">Reduced motion</span>
+                                <span class="toggle-desc">Minimize animations and transitions</span>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" id="reducedMotion">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3 class="settings-group-title">Data</h3>
+                        <div class="setting-row">
+                            <button class="btn btn-danger" id="clearCacheBtn">Clear wallpaper cache</button>
+                        </div>
+                        <div class="setting-row">
+                            <button class="btn btn-danger" id="resetSettingsBtn">Reset all settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Wallpaper Category Modal -->
+    <dialog class="dialog category-dialog" id="categoryDialog">
+        <div class="dialog-content">
+            <h2 class="dialog-title">Wallpaper Categories</h2>
+            <p class="dialog-description">Select categories for random wallpaper rotation.</p>
+            <div class="category-grid" id="categoryGrid"></div>
+            <div class="dialog-actions">
+                <button type="button" class="btn btn-secondary" id="categoryCancelBtn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="categorySaveBtn">Save</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

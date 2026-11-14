@@ -1,0 +1,16 @@
+{
+  "name": "velora",
+  "version": "1.0.0",
+  "description": "A beautiful, customizable Chrome new tab extension featuring liquid glass effects, theme selector, quick access buttons, and dynamic wallpapers.",
+  "main": "test-ui.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright": "^1.65.0"
+  }
+}
